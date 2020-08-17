@@ -18,7 +18,7 @@ import (
 
 // PerformLogin performs a login and returns SessionInfo including
 // the session id (SID) on success
-func (fb *FritzBox) PerformLogin(adminPassword string) error {
+func (fb *FritzBox) PerformLogin() error {
 	client := fb.getHTTPClient()
 
 	session, err := fetchSessionInfo(client, fb.Host+"/login_sid.lua")
@@ -26,7 +26,7 @@ func (fb *FritzBox) PerformLogin(adminPassword string) error {
 		return err
 	}
 
-	response := buildAuthHash(session.Challenge, adminPassword)
+	response := buildAuthHash(session.Challenge, fb.Passw)
 
 	url, err := url.Parse(fb.Host)
 	if err != nil {

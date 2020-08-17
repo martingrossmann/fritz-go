@@ -6,6 +6,7 @@ import "time"
 type FritzBox struct {
 	Host     string
 	User     string
+	Passw    string
 	Insecure bool // If host is https allow insecure/invalid TLS certificates
 	session  SessionInfo
 }
