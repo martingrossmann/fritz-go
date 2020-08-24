@@ -13,6 +13,15 @@ TR064 is a great protocol to interact with your Fritz.Box. Unfortunately in case
 
 Thats why [Mirco Ropic](http://www.apfel-z.net/spezial/kontakt/) shows a way to get all traffic data via http post requests: http://www.apfel-z.net/artikel/Fritz_Box_API_via_curl_wget/. 
 
+## Build the app
+
+* Run ``go build`` to create an executable file for your system _or_
+* Run ``build.cmd`` (sorry, it's a Windows batch) to create 
+  * fritz-go.exe
+  * fritz-go as Linux/ARM binary.
+  
+The Linux/ARM binary can used on Synology NAS systems build on ARM (tested with DS218play).
+
 ## Usage
 
 * Rename the file `settings_tmpl.conf` to `settings.conf` and fill out the correct values.
