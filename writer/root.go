@@ -24,7 +24,8 @@ func addData(counter fritz.OnlineCounter) error {
 	csvFile, err := os.OpenFile(csvFileName, os.O_APPEND|os.O_RDWR, 0644)
 	r := csv.NewReader(csvFile)
 	records, err := r.ReadAll()
-	checkErr(err, "Cannot read the csv file.")
+	checkErr(err, "Cannot read the CSV file.")
+	log.Println((len(records) - 1), "data in CSV file.")
 
 	// Check for the data if already exist.
 	if records[len(records)-1][0] != record[0] {
