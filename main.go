@@ -5,6 +5,7 @@ import (
 	"github.com/martingrossmann/fritz-go/fritz"
 	"github.com/martingrossmann/fritz-go/writer"
 	"log"
+	"os"
 
 	"github.com/magiconair/properties"
 )
@@ -15,6 +16,10 @@ type Config struct {
 }
 
 func main() {
+	file, err := os.OpenFile("logs.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	checkErr(err, "Cannot open logging file")
+	log.SetOutput(file)
+
 	conf := loadConfig()
 
 	fritz := &fritz.FritzBox{
