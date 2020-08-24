@@ -16,3 +16,5 @@
 /.idea/
 /fritzgo.iml
 /settings.conf
+/fritz-go
+/counterdata.csv

@@ -3,6 +3,7 @@ package fritz
 import (
 	"bytes"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -29,8 +30,11 @@ func (fb *FritzBox) ReadOnlineCounter() (OnlineCounter, error) {
 
 func fetchCounterInfo(client *http.Client, url string, fb *FritzBox) (OnlineCounter, error) {
 
+	tY := time.Now().AddDate(0, 0, -1)
+	rounded := time.Date(tY.Year(), tY.Month(), tY.Day(), 0, 0, 0, 0, tY.Location())
+
 	counter := OnlineCounter{
-		DayOfData: time.Now().AddDate(0, 0, -1),
+		DayOfData: rounded,
 	}
 	payload := bytes.NewBufferString("xhr=1&sid=" + fb.session.SID + "&lang=de&page=netCnt&no_sidrenew=")
 	resp, err := client.Post(url, "application/x-www-form-urlencoded", payload)
@@ -53,6 +57,8 @@ func fetchCounterInfo(client *http.Client, url string, fb *FritzBox) (OnlineCoun
 
 	dataReceivedNode := htmlquery.FindOne(doc, XPATH_RECEIVED_DATA_YESTERDAY_DE)
 	counter.DataReceived = dataReceivedNode.Data
+	log.Println("Counter data read from Fritz.Box.")
+	log.Println(counter)
 
 	return counter, nil
 }

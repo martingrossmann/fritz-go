@@ -19,6 +19,7 @@ import (
 // PerformLogin performs a login and returns SessionInfo including
 // the session id (SID) on success
 func (fb *FritzBox) PerformLogin() error {
+	log.Println("Trying to login to Fritz.Box " + fb.Host)
 	client := fb.getHTTPClient()
 
 	session, err := fetchSessionInfo(client, fb.Host+"/login_sid.lua")
@@ -44,7 +45,7 @@ func (fb *FritzBox) PerformLogin() error {
 	}
 
 	fb.session = session
-
+	log.Println("Session created")
 	return nil
 }
 

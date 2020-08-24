@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	_ "github.com/martingrossmann/fritz-go/cmd"
 	"github.com/martingrossmann/fritz-go/fritz"
+	"github.com/martingrossmann/fritz-go/writer"
 	"log"
 
 	"github.com/magiconair/properties"
@@ -25,11 +25,9 @@ func main() {
 
 	fritz.PerformLogin()
 	counter, err := fritz.ReadOnlineCounter()
-	if err != nil {
-		log.Fatal("Cannot handle online counter data from Fritz.Box", err)
-	}
+	checkErr(err, "Cannot handle online counter data from Fritz.Box")
 
-	fmt.Println(counter)
+	writer.WriteData(counter)
 
 	//cmd.Exec()
 }
@@ -38,8 +36,12 @@ func loadConfig() Config {
 	conf := Config{}
 	p := properties.MustLoadFile("settings.conf", properties.UTF8)
 	err := p.Decode(&conf)
-	if err != nil {
-		log.Fatal("Error at parsing settings.conf: ", err)
-	}
+	checkErr(err, "Error at parsing settings.conf: ")
 	return conf
+}
+
+func checkErr(err error, message string) {
+	if err != nil {
+		log.Fatal(message, err)
+	}
 }
