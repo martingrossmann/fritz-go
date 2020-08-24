@@ -18,7 +18,6 @@ Thats why [Mirco Ropic](http://www.apfel-z.net/spezial/kontakt/) shows a way to 
 * Rename the file `settings_tmpl.conf` to `settings.conf` and fill out the correct values.
 * Start the application 
 
-
 ## Thanks to
 
 https://github.com/tisba/fritz-tls for inspirations.
