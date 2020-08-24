@@ -58,7 +58,7 @@ func fetchCounterInfo(client *http.Client, url string, fb *FritzBox) (OnlineCoun
 	dataReceivedNode := htmlquery.FindOne(doc, XPATH_RECEIVED_DATA_YESTERDAY_DE)
 	counter.DataReceived = dataReceivedNode.Data
 	log.Println("Counter data read from Fritz.Box.")
-	log.Println(counter)
+	log.Println("Yesterday:", counter)
 
 	return counter, nil
 }
