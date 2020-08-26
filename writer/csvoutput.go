@@ -2,16 +2,19 @@ package writer
 
 import (
 	"encoding/csv"
+	"github.com/martingrossmann/fritz-go/common"
 	"github.com/martingrossmann/fritz-go/fritz"
 	"log"
 	"os"
 )
 
-const csvFileName = "counterdata.csv"
+var csvFileName = ""
 
 var csvHeader = []string{"date", "received", "sent"}
 
-func WriteData(counter fritz.OnlineCounter) {
+func WriteToCSV(conf common.Config, counter fritz.OnlineCounter) {
+	csvFileName = conf.CsvFile
+
 	checkErr(prepareFile(), "Error on file")
 	checkErr(addData(counter), "Error on file")
 }
