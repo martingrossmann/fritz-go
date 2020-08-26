@@ -1,0 +1,44 @@
+version: '3'
+services:
+
+  grafana:
+    image: grafana/grafana:7.1.5
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+      GF_AUTH_ANONYMOUS_ENABLED: ${GF_AUTH_ANONYMOUS_ENABLED}
+    volumes:
+      - 'grafana_data:/var/lib/grafana'
+      - './grafana-plugins/status_dot/:/var/lib/grafana/plugins/status_dot/'
+    depends_on:
+      - influxdb
+    restart: always
+    ports:
+      - "3000:3000"
+    logging:
+      driver: "json-file"
+    networks:
+      - stat
+
+  influxdb:
+    image: influxdb:1.8.1-alpine
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    environment:
+      INFLUXDB_REPORTING_DISABLED: "true"
+      INFLUXDB_DB: ${INFLUXDB_DB}
+      INFLUXDB_USER: ${INFLUXDB_USER}
+      INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
+    networks:
+      - stat
+
+networks:
+  stat:
+    driver: bridge
+
+volumes:
+  grafana_data:
+    external: false
+  influxdb_data:
+    external: false
