@@ -204,7 +204,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 4,
+        "w": 3,
         "x": 12,
         "y": 0
       },
@@ -226,6 +226,7 @@
       "pluginVersion": "7.1.5",
       "targets": [
         {
+          "alias": "received",
           "groupBy": [
             {
               "params": [
@@ -260,11 +261,48 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "alias": "sent",
+          "groupBy": [
+            {
+              "params": [
+                "168h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "fritz_traffic",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sent_per_day"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Data received last 7 days",
+      "title": "Traffic last 7 days",
       "type": "stat"
     }
   ],
@@ -295,5 +333,5 @@
   "timezone": "",
   "title": "Fritz.Box",
   "uid": "Pbmf5UNMz",
-  "version": 7
+  "version": 8
 }
