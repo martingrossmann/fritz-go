@@ -204,7 +204,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 3,
+        "w": 5,
         "x": 12,
         "y": 0
       },
@@ -304,6 +304,91 @@
       "timeShift": null,
       "title": "Traffic last 7 days",
       "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decmbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true
+      },
+      "pluginVersion": "7.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "fritz_traffic",
+          "orderByTime": "DESC",
+          "policy": "default",
+          "query": "SELECT \"received_per_day\" AS \"Download\", \"sent_per_day\" AS \"Uplaod\" FROM \"fritz_traffic\" WHERE $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "received_per_day"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Download"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "sent_per_day"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Uplaod"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Daily traffic",
+      "type": "table"
     }
   ],
   "schemaVersion": 26,
@@ -333,5 +418,5 @@
   "timezone": "",
   "title": "Fritz.Box",
   "uid": "Pbmf5UNMz",
-  "version": 8
+  "version": 10
 }
