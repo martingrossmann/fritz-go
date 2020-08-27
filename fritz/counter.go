@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -31,7 +32,7 @@ func (fb *FritzBox) ReadOnlineCounter() (OnlineCounter, error) {
 func fetchCounterInfo(client *http.Client, url string, fb *FritzBox) (OnlineCounter, error) {
 
 	tY := time.Now().AddDate(0, 0, -1)
-	rounded := time.Date(tY.Year(), tY.Month(), tY.Day(), 0, 0, 0, 0, tY.Location())
+	rounded := time.Date(tY.Year(), tY.Month(), tY.Day(), 12, 0, 0, 0, tY.Location())
 
 	counter := OnlineCounter{
 		DayOfData: rounded,
@@ -53,10 +54,17 @@ func fetchCounterInfo(client *http.Client, url string, fb *FritzBox) (OnlineCoun
 	}
 
 	dataSentNode := htmlquery.FindOne(doc, XPATH_SENT_DATA_YESTERDAY_DE)
-	counter.DataSent = dataSentNode.Data
+	counter.DataSent, err = strconv.Atoi(dataSentNode.Data)
+	if err != nil {
+		return OnlineCounter{}, err
+	}
 
 	dataReceivedNode := htmlquery.FindOne(doc, XPATH_RECEIVED_DATA_YESTERDAY_DE)
-	counter.DataReceived = dataReceivedNode.Data
+	counter.DataReceived, err = strconv.Atoi(dataReceivedNode.Data)
+	if err != nil {
+		return OnlineCounter{}, err
+	}
+
 	log.Println("Counter data read from Fritz.Box.")
 	log.Println("Yesterday:", counter)
 

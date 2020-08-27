@@ -18,7 +18,7 @@ type SessionInfo struct {
 }
 
 type OnlineCounter struct {
-	DataSent     string
-	DataReceived string
+	DataSent     int
+	DataReceived int
 	DayOfData    time.Time
 }

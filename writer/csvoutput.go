@@ -6,6 +6,7 @@ import (
 	"github.com/martingrossmann/fritz-go/fritz"
 	"log"
 	"os"
+	"strconv"
 )
 
 var csvFileName = ""
@@ -22,7 +23,7 @@ func WriteToCSV(conf common.Config, counter fritz.OnlineCounter) {
 // Add OnlineCounter data to existing CSV file
 func addData(counter fritz.OnlineCounter) error {
 	dateString := counter.DayOfData.Format("2006-01-02")
-	record := []string{dateString, counter.DataReceived, counter.DataSent}
+	record := []string{dateString, strconv.Itoa(counter.DataReceived), strconv.Itoa(counter.DataSent)}
 
 	csvFile, err := os.OpenFile(csvFileName, os.O_APPEND|os.O_RDWR, 0644)
 	r := csv.NewReader(csvFile)
