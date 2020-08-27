@@ -26,7 +26,13 @@ func main() {
 	counter, err := fritz.ReadOnlineCounter()
 	checkErr(err, "Cannot handle online counter data from Fritz.Box")
 
-	writer.WriteToCSV(conf, counter)
+	if conf.CsvActive {
+		writer.WriteToCSV(conf, counter)
+	}
+
+	if conf.InfluxActive {
+		writer.WriteToInnflux(conf, counter)
+	}
 
 	//cmd.Exec()
 }
