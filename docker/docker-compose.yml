@@ -41,7 +41,7 @@ services:
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     environment:
       # real influx host
-      INFLUXDB_URI: "http://influxdb:8086"
+      INFLUXDB_URI: "http://localhost:8086"
       INFLUXDB_DB: ${INFLUXDB_DB}
       INFLUXDB_USER: ${INFLUXDB_USER}
       INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
