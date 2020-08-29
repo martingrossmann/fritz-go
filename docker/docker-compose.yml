@@ -36,7 +36,6 @@ services:
     telegraf:
       image: telegraf:1.14.5-alpine
       restart: always
-      network_mode: "host"
       volumes:
         - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       environment:
@@ -45,6 +44,8 @@ services:
         INFLUXDB_DB: ${INFLUXDB_DB}
         INFLUXDB_USER: ${INFLUXDB_USER}
         INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
+      networks:
+        - stat
 
 networks:
   stat:
