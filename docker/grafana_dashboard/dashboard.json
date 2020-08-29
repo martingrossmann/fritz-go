@@ -65,20 +65,7 @@
       "targets": [
         {
           "alias": "MB received",
-          "groupBy": [
-            {
-              "params": [
-                "24h"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "fritz_traffic",
           "orderByTime": "ASC",
           "policy": "default",
@@ -91,47 +78,14 @@
                   "received_per_day"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "MB sent",
-          "groupBy": [
-            {
-              "params": [
-                "24h"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "fritz_traffic",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
+            ],
             [
               {
                 "params": [
                   "sent_per_day"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               }
             ]
           ],
@@ -230,13 +184,13 @@
           "groupBy": [
             {
               "params": [
-                "168h"
+                "7d"
               ],
               "type": "time"
             },
             {
               "params": [
-                "null"
+                "none"
               ],
               "type": "fill"
             }
@@ -244,6 +198,8 @@
           "measurement": "fritz_traffic",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "select sum(\"maxvalue\") from (SELECT max(\"received_per_day\") AS \"maxvalue\" FROM \"fritz_traffic\" WHERE time >= now() - 7d group by time(1d))",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -267,7 +223,7 @@
           "groupBy": [
             {
               "params": [
-                "168h"
+                "7d"
               ],
               "type": "time"
             },
@@ -281,6 +237,8 @@
           "measurement": "fritz_traffic",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "select sum(\"maxvalue\") from (SELECT max(\"sent_per_day\") AS \"maxvalue\" FROM \"fritz_traffic\" WHERE time >= now() - 7d group by time(1d))",
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -418,5 +376,5 @@
   "timezone": "",
   "title": "Fritz.Box",
   "uid": "Pbmf5UNMz",
-  "version": 10
+  "version": 4
 }
