@@ -25,6 +25,7 @@ services:
       - "8086:8086"
     volumes:
       - influxdb_data:/var/lib/influxdb
+    restart: always
     environment:
       INFLUXDB_REPORTING_DISABLED: "true"
       INFLUXDB_DB: ${INFLUXDB_DB}
@@ -33,19 +34,19 @@ services:
     networks:
       - stat
 
-    telegraf:
-      image: telegraf:1.14.5-alpine
-      restart: always
-      volumes:
-        - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      environment:
-        # real influx host
-        INFLUXDB_URI: "http://influxdb:8086"
-        INFLUXDB_DB: ${INFLUXDB_DB}
-        INFLUXDB_USER: ${INFLUXDB_USER}
-        INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
-      networks:
-        - stat
+  telegraf:
+    image: telegraf:1.14.5-alpine
+    restart: always
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    environment:
+      # real influx host
+      INFLUXDB_URI: "http://influxdb:8086"
+      INFLUXDB_DB: ${INFLUXDB_DB}
+      INFLUXDB_USER: ${INFLUXDB_USER}
+      INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
+    networks:
+      - stat
 
 networks:
   stat:
