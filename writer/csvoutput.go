@@ -32,7 +32,7 @@ func addData(counter fritz.OnlineCounter, csvFileName string) error {
 		// Write new data to file
 		w := csv.NewWriter(csvFile)
 		if err := w.Write(record); err != nil {
-			log.Fatalln("Error writing record to csv:", err)
+			log.Fatalln("Error writing record to CSV:", err)
 		}
 		w.Flush()
 		log.Println("New data stored in file.")
@@ -49,7 +49,7 @@ func addData(counter fritz.OnlineCounter, csvFileName string) error {
 // If empty --> add header
 func prepareFile(csvFileName string) error {
 	csvFile, err := os.OpenFile(csvFileName, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
-	checkErr(err, "Cannot create csv file")
+	checkErr(err, "Cannot create CSV file")
 
 	r := csv.NewReader(csvFile)
 	records, err := r.ReadAll()
@@ -58,7 +58,7 @@ func prepareFile(csvFileName string) error {
 	if len(records) < 1 {
 		w := csv.NewWriter(csvFile)
 		if err := w.Write(csvHeader); err != nil {
-			log.Fatalln("error writing record to csv:", err)
+			log.Fatalln("error writing record to CSV:", err)
 		}
 		w.Flush()
 	}

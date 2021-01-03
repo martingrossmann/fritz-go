@@ -13,4 +13,5 @@ type Config struct {
 	InfluxTcMeasurement string `properties:"influxdb.traffic.measurement"`
 	InfluxTcReceived    string `properties:"influxdb.traffic.received"`
 	InfluxTcSent        string `properties:"influxdb.traffic.sent"`
+	InfluxImportFile    string `properties:"influxdb.importfile"`
 }
