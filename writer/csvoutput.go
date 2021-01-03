@@ -9,19 +9,15 @@ import (
 	"strconv"
 )
 
-var csvFileName = ""
-
 var csvHeader = []string{"date", "received", "sent"}
 
 func WriteToCSV(conf common.Config, counter fritz.OnlineCounter) {
-	csvFileName = conf.CsvFile
-
-	checkErr(prepareFile(), "Error on file")
-	checkErr(addData(counter), "Error on file")
+	checkErr(prepareFile(conf.CsvFile), "Error on file")
+	checkErr(addData(counter, conf.CsvFile), "Error on file")
 }
 
 // Add OnlineCounter data to existing CSV file
-func addData(counter fritz.OnlineCounter) error {
+func addData(counter fritz.OnlineCounter, csvFileName string) error {
 	dateString := counter.DayOfData.Format("2006-01-02")
 	record := []string{dateString, strconv.Itoa(counter.DataReceived), strconv.Itoa(counter.DataSent)}
 
@@ -51,7 +47,7 @@ func addData(counter fritz.OnlineCounter) error {
 // If not exist --> create new
 // If already exist --> check if empty
 // If empty --> add header
-func prepareFile() error {
+func prepareFile(csvFileName string) error {
 	csvFile, err := os.OpenFile(csvFileName, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
 	checkErr(err, "Cannot create csv file")
 
