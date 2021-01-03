@@ -34,19 +34,20 @@ services:
     networks:
       - stat
 
-  telegraf:
-    image: telegraf:1.14.5-alpine
-    restart: always
-    volumes:
-      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    environment:
-      # real influx host
-      INFLUXDB_URI: "http://influxdb:8086"
-      INFLUXDB_DB: ${INFLUXDB_DB}
-      INFLUXDB_USER: ${INFLUXDB_USER}
-      INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
-    networks:
-      - stat
+# Needs to much resources
+#  telegraf:
+#    image: telegraf:1.14.5-alpine
+#    restart: always
+#    volumes:
+#      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+#    environment:
+#      # real influx host
+#      INFLUXDB_URI: "http://influxdb:8086"
+#      INFLUXDB_DB: ${INFLUXDB_DB}
+#      INFLUXDB_USER: ${INFLUXDB_USER}
+#      INFLUXDB_USER_PASSWORD: ${INFLUXDB_USER_PASSWORD}
+#    networks:
+#      - stat
 
 networks:
   stat:
