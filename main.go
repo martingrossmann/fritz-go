@@ -1,59 +1,44 @@
 package main
 
 import (
-	_ "github.com/martingrossmann/fritz-go/cmd"
-	"github.com/martingrossmann/fritz-go/common"
-	"github.com/martingrossmann/fritz-go/fritz"
-	"github.com/martingrossmann/fritz-go/writer"
+	"github.com/martingrossmann/fritz-go/cmd"
 	"io"
 	"log"
 	"os"
-
-	"github.com/magiconair/properties"
 )
 
 func main() {
 	initLogging()
-	conf := loadConfig()
+	//conf := loadConfig()
 
-	fritz := &fritz.FritzBox{
-		Host:     conf.FritzHost,
-		Insecure: false,
-		Passw:    conf.FritzPassword,
-	}
+	//fritz := &fritz.FritzBox{
+	//	Host:     conf.FritzHost,
+	//	Insecure: false,
+	//	Passw:    conf.FritzPassword,
+	//}
+	//
+	//fritz.PerformLogin()
+	//counter, err := fritz.ReadOnlineCounter()
+	//checkErr(err, "Cannot handle online counter data from Fritz.Box")
+	//
+	//if conf.CsvActive {
+	//	writer.WriteToCSV(conf, counter)
+	//}
+	//
+	//if conf.InfluxActive {
+	//	writer.WriteToInnflux(conf, counter)
+	//}
 
-	fritz.PerformLogin()
-	counter, err := fritz.ReadOnlineCounter()
-	checkErr(err, "Cannot handle online counter data from Fritz.Box")
+	//writer.ConvertCsvToInfluxData(conf)
 
-	if conf.CsvActive {
-		writer.WriteToCSV(conf, counter)
-	}
-
-	if conf.InfluxActive {
-		writer.WriteToInnflux(conf, counter)
-	}
-
-	//cmd.Exec()
+	cmd.Exec()
 }
 
 func initLogging() {
 	file, err := os.OpenFile("logs.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	checkErr(err, "Cannot open logging file")
+	if err != nil {
+		log.Fatal("Cannot open logging file", err)
+	}
 	mw := io.MultiWriter(os.Stdout, file)
 	log.SetOutput(mw)
-}
-
-func loadConfig() common.Config {
-	conf := common.Config{}
-	p := properties.MustLoadFile("settings.conf", properties.UTF8)
-	err := p.Decode(&conf)
-	checkErr(err, "Error at parsing settings.conf: ")
-	return conf
-}
-
-func checkErr(err error, message string) {
-	if err != nil {
-		log.Fatal(message, err)
-	}
 }

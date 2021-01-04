@@ -14,7 +14,7 @@ import (
 func ConvertCsvToInfluxData(conf common.Config) {
 	csvFileName := conf.CsvFile
 	influxFileName := conf.InfluxImportFile
-	log.Println("Convert all data from ", csvFileName, " to InfluxDB import file ", influxFileName)
+	log.Println("Convert all data from", csvFileName, "to InfluxDB import file", influxFileName)
 
 	csvFile, err := os.OpenFile(csvFileName, os.O_RDONLY, 0644)
 	r := csv.NewReader(csvFile)
@@ -44,7 +44,7 @@ func ConvertCsvToInfluxData(conf common.Config) {
 			locBerlin, _ := time.LoadLocation("Europe/Berlin")
 			t, err := time.ParseInLocation(timeLayout, record[0]+"T12:00:00", locBerlin)
 			if err != nil {
-				log.Fatal("Cannot parse time value ", record[0])
+				log.Fatal("Cannot parse time value", record[0])
 			}
 
 			data := fmt.Sprintf(dataFormat,
@@ -57,11 +57,10 @@ func ConvertCsvToInfluxData(conf common.Config) {
 				t.Unix())
 
 			influxFile.WriteString(data + "\n")
-
-			log.Println(data)
 		}
 	}
 
 	influxFile.Sync()
+	log.Println("Finished.")
 
 }

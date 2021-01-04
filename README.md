@@ -37,7 +37,19 @@ The Linux/ARM binary can used on Synology NAS systems build on ARM (tested with 
 ## Usage
 
 * Rename the file ``settings_tmpl.conf`` to ``settings.conf`` and fill out the correct values.
-* Start the application 
+* Start the application with ``fritz-go``. The app connects to your Fritz box, identify your traffic and store the data to CSV and/or to an InfluxDB.
+
+### Parameter
+
+``fritz-go convert`` creates an import file for InfluxDB based on existing CSV file (see ``settings.conf`` for filename).
+
+You can import that file to InfluxDB with the following command:
+
+````shell
+curl -i -XPOST 'http://localhost:8086/api/v2/write?bucket=fritzdata&precision=s' --header 'Authorization: Token fritz:<passwpord>' --data-binary @influxdbdata
+````
+
+where ``fritzdata`` is your InfluxDB db (=bucket) and ``influxdbdata`` your import file
 
 ## Thanks to
 
