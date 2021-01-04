@@ -30,6 +30,12 @@ func ConvertCsvToInfluxData(conf common.Config) {
 	dataFormat := "%s,host=%s %s=%si,%s=%si %d"
 	timeLayout := "2006-01-02T03:04:05"
 
+	//influxFile, err :=os.OpenFile(influxFileName, os.O_CREATE|os.O_RDWR, 0644)
+	influxFile, err := os.Create(influxFileName)
+	checkErr(err, "Cannot create InfluxDB file")
+
+	defer influxFile.Close()
+
 	for i, record := range records {
 		// Ignore the header data
 		if i != 0 {
@@ -50,11 +56,12 @@ func ConvertCsvToInfluxData(conf common.Config) {
 				record[2],
 				t.Unix())
 
+			influxFile.WriteString(data + "\n")
+
 			log.Println(data)
 		}
 	}
 
-	//influxFile, err :=os.OpenFile(influxFileName, os.O_CREATE|os.O_RDWR, 0644)
-	//checkErr(err, "Cannot create InfluxDB file")
+	influxFile.Sync()
 
 }
