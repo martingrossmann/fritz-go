@@ -1,6 +1,8 @@
 package fritz
 
-import "time"
+import (
+	"time"
+)
 
 // Stores general information about the FritzBox
 type FritzBox struct {
@@ -15,6 +17,13 @@ type FritzBox struct {
 type SessionInfo struct {
 	SID       string `xml:"SID"`
 	Challenge string `xml:"Challenge"`
+	Users     []User `xml:"Users"`
+}
+
+type User struct {
+	// TODO does not work
+	//LastUsed int    `xml:"last,attr,default=0"`
+	User string `xml:"User"`
 }
 
 type OnlineCounter struct {

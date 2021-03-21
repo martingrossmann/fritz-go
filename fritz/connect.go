@@ -33,10 +33,14 @@ func (fb *FritzBox) PerformLogin() error {
 	if err != nil {
 		return err
 	}
-	user := url.User.Username()
-	url.User = nil
+	// was valid until FritzOS 7.21
+	//user := url.User.Username()
+	//url.User = nil
 
-	session, err = fetchSessionInfo(client, url.String()+"/login_sid.lua?&username="+user+"&response="+response)
+	// From 7.25 you need a user
+	user := session.Users[len(session.Users)-1]
+
+	session, err = fetchSessionInfo(client, url.String()+"/login_sid.lua?&username="+user.User+"&response="+response)
 	if err != nil {
 		return err
 	}

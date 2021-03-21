@@ -46,7 +46,8 @@ func readCounterAndWrite() {
 		Passw:    conf.FritzPassword,
 	}
 
-	fritz.PerformLogin()
+	err := fritz.PerformLogin()
+	checkErr(err, "Cannot login to Frith.Box")
 	counter, err := fritz.ReadOnlineCounter()
 	checkErr(err, "Cannot handle online counter data from Fritz.Box")
 
