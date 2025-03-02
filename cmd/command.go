@@ -40,15 +40,15 @@ func Exec() {
 func readCounterAndWrite() {
 	conf := loadConfig()
 
-	fritz := &fritz.FritzBox{
+	instance := &fritz.FritzBox{
 		Host:     conf.FritzHost,
 		Insecure: false,
 		Passw:    conf.FritzPassword,
 	}
 
-	err := fritz.PerformLogin()
+	err := instance.PerformLogin()
 	checkErr(err, "Cannot login to Fritz.Box")
-	counter, err := fritz.ReadOnlineCounter()
+	counter, err := instance.ReadOnlineCounter()
 	checkErr(err, "Cannot handle online counter data from Fritz.Box")
 
 	if conf.CsvActive {

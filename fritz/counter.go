@@ -24,6 +24,12 @@ type CounterData struct {
 		Bytesreceivedhigh string `json:"BytesReceivedHigh"`
 		Bytesreceivedlow  string `json:"BytesReceivedLow"`
 	} `json:"Yesterday"`
+	Today struct {
+		Bytessenthigh     string `json:"BytesSentHigh"`
+		Bytessentlow      string `json:"BytesSentLow"`
+		Bytesreceivedhigh string `json:"BytesReceivedHigh"`
+		Bytesreceivedlow  string `json:"BytesReceivedLow"`
+	} `json:"Today"`
 }
 
 // FritzOS <= 7.21
@@ -95,13 +101,13 @@ func fetchCounterInfoWithXpath(content string) (OnlineCounter, error) {
 	return counter, nil
 }
 
-// With FritzOS 7.25 and higher the informatin are stored in a JavaScript object within the HTML page
+// With FritzOS 7.25 and higher the information are stored in a JavaScript object within the HTML page
 func fetchCounterInfoWithRegex(content string) (OnlineCounter, error) {
 	tY := time.Now().AddDate(0, 0, -1)
-	rounded := time.Date(tY.Year(), tY.Month(), tY.Day(), 12, 0, 0, 0, tY.Location())
+	yesterdaysDate := time.Date(tY.Year(), tY.Month(), tY.Day(), 12, 0, 0, 0, tY.Location())
 
 	counter := OnlineCounter{
-		DayOfData: rounded,
+		DayOfData: yesterdaysDate,
 	}
 
 	re := regexp.MustCompile(`const data =(.*);`)
